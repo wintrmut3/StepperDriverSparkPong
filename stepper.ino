@@ -20,7 +20,7 @@
 
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 // for your motor
-
+bool direction = true; //true for ccw, false cw
 //pins 8-11: Green red yellow blue
 
 // initialize the stepper library on pins 8 through 11:
@@ -31,6 +31,15 @@ int stepCount = 0;  // number of steps the motor has taken
 void setup() {
   // nothing to do inside the setup
   Serial.begin(9600);
+}
+
+void flipDir(){
+    if (flipDir){
+        Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11); //SWITCH PINS TO CHANGE DIRECTION
+    }
+    else{
+        Stepper myStepper(stepsPerRevolution, 10, 11,8,9); //SWITCH PINS TO CHANGE DIRECTION
+    }
 }
 
 void loop() {
@@ -46,5 +55,7 @@ void loop() {
     // step 1/100 of a revolution:
     myStepper.step(stepsPerRevolution / 100);
   }
+  delay(1000);
+  flipDir();
 
 }
