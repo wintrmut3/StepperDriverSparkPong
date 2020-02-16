@@ -21,16 +21,31 @@
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 // for your motor
 bool direction = true; //true for ccw, false cw
-//pins 8-11: Green red yellow blue
+bool isNano = false; //change depending on your device
+
+int pin1 = 8, pin2 = 9, pin3 = 10, pin4 = 11; //pins 8-11: Green red yellow blue
 
 // initialize the stepper library on pins 8 through 11:
-Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11); //SWITCH PINS TO CHANGE DIRECTION
+Stepper myStepper(stepsPerRevolution, pin1, pin2, pin3, pin4); //SWITCH PINS TO CHANGE DIRECTION
 
 int stepCount = 0;  // number of steps the motor has taken
 
 void setup() {
   // nothing to do inside the setup
   Serial.begin(9600);
+  changeDevice(isNano);
+}
+
+//this fxn only changes the pin numbers if you're using a nano
+void changeDevice(bool isNano) {
+    if(isNano) { //add your pin numbers here
+      /*
+      pin1 = ;
+      pin2 = ;
+      pin3 = ;
+      pin4 = ;
+      */
+    }
 }
 
 void flipDir(){
@@ -38,7 +53,7 @@ void flipDir(){
         Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11); //SWITCH PINS TO CHANGE DIRECTION
     }
     else{
-        Stepper myStepper(stepsPerRevolution, 10, 11,8,9); //SWITCH PINS TO CHANGE DIRECTION
+        Stepper myStepper(stepsPerRevolution, 10, 11, 8,9); //SWITCH PINS TO CHANGE DIRECTION
     }
 }
 
