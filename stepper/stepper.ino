@@ -23,9 +23,8 @@ int stepsPerRevolution = 200;  // change this to fit the number of steps per rev
 
 // for your motor
 bool direction = true; //true for ccw, false cw
-bool isNano = false; //change depending on your device
 
-//default pins are for a regular arduino. CW rotation.
+//default pins are for an arduino uno. CW rotation.
 int pin1 = 8, pin2 = 9, pin3 = 10, pin4 = 11; //pins 8-11: red green yellow blue
 
 // initialize the stepper library on pins 8 through 11:
@@ -38,19 +37,6 @@ int stepCount = 0;  // number of steps the motor has taken
 void setup() {
   // nothing to do inside the setup
   Serial.begin(9600);
-  changeDevice(isNano);
-}
-
-//this fxn only changes the pin numbers if you're using a nano
-void changeDevice(bool isNano) {
-    if(isNano) { //add your pin numbers here
-      /*
-      pin1 = ;
-      pin2 = ;
-      pin3 = ;
-      pin4 = ;
-      */
-    }
 }
 
 void flipDir(){
