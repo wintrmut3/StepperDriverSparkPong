@@ -73,9 +73,11 @@ void loop() {
   //delay(1000);
   //flipDir();
 
-  //Check if timeElapsed is a multiple of 1000ms, plus or minus 100ms
+  //Check if timeElapsed is a multiple of 1000ms
   //Note: motor won't always swap directions every 1000ms because the code might be executing
   //another line in the loop when timeElapsed gets to a multiple of 1000
+  //For the actual project, we should probably use a counter that doesn't change as frequently
+  //as millis() to determine when to change directions
   if((timeElapsed % 1000) == 0)
     flipDir();
   
