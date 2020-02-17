@@ -18,17 +18,22 @@
 
 #include <Stepper.h>
 
-const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
+/************GLOBAL VARIABLES**********/
+int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
+
 // for your motor
 bool direction = true; //true for ccw, false cw
 bool isNano = false; //change depending on your device
 
-int pin1 = 8, pin2 = 9, pin3 = 10, pin4 = 11; //pins 8-11: Green red yellow blue
+//default pins are for a regular arduino. CW rotation.
+int pin1 = 8, pin2 = 9, pin3 = 10, pin4 = 11; //pins 8-11: red green yellow blue
 
 // initialize the stepper library on pins 8 through 11:
-Stepper myStepper(stepsPerRevolution, pin1, pin2, pin3, pin4); //SWITCH PINS TO CHANGE DIRECTION
+Stepper myStepper(stepsPerRevolution, pin1, pin2, pin3, pin4);
 
 int stepCount = 0;  // number of steps the motor has taken
+
+/*********END OF GLOBAL VARIABLES*******/
 
 void setup() {
   // nothing to do inside the setup
@@ -49,19 +54,14 @@ void changeDevice(bool isNano) {
 }
 
 void flipDir(){
-    if (flipDir){
-        Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11); //SWITCH PINS TO CHANGE DIRECTION
-    }
-    else{
-        Stepper myStepper(stepsPerRevolution, 10, 11, 8,9); //SWITCH PINS TO CHANGE DIRECTION
-    }
+  stepsPerRevolution *= -1;
 }
 
 void loop() {
-  // read the sensor value:
-  int sensorReading = 1023; //analogRead(A0); //assuming analogRead returns values from 0 to 1023
-  Serial.print(analogRead(A0));
-  Serial.print("\n");
+  int timeElapsed = millis();
+  
+  int sensorReading = 1023;
+
   // map it to a range from 0 to 100:
   int motorSpeed = map(sensorReading, 0, 1023, 0, 100);
   // set the motor speed:
@@ -70,7 +70,13 @@ void loop() {
     // step 1/100 of a revolution:
     myStepper.step(stepsPerRevolution / 100);
   }
-  delay(1000);
-  flipDir();
+  //delay(1000);
+  //flipDir();
 
+  //Check if timeElapsed is a multiple of 1000ms, plus or minus 10ms
+  //I can't check to the exact millisecond because the loop itself takes more
+  //than 1 ms to arrive at this line
+  if((timeElapsed/100 % 10) == 0) {
+    flipDir();
+  }
 }
