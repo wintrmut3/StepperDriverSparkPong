@@ -44,27 +44,20 @@ void flipDir(){
 }
 
 void loop() {
-  int timeElapsed = millis();
   
-  int sensorReading = 1023;
-
-  // map it to a range from 0 to 100:
-  int motorSpeed = map(sensorReading, 0, 1023, 0, 100);
+  // motorSpeed should be a range from 0 to 100:
+  int motorSpeed = 50;
   // set the motor speed:
   if (motorSpeed > 0) {
     myStepper.setSpeed(motorSpeed); //setSpeed only take a positive number
     // step 1/100 of a revolution:
     myStepper.step(stepsPerRevolution / 100);
   }
-  //delay(1000);
-  //flipDir();
 
-  //Check if timeElapsed is a multiple of 1000ms
-  //Note: motor won't always swap directions every 1000ms because the code might be executing
-  //another line in the loop when timeElapsed gets to a multiple of 1000
-  //For the actual project, we should probably use a counter that doesn't change as frequently
-  //as millis() to determine when to change directions
-  if((timeElapsed % 1000) == 0)
+  if(stepCount == 500) { //flip direction of rotation every 500 steps
     flipDir();
-  
+    stepCount = 0;
+  }
+
+  stepCount++;
 }
